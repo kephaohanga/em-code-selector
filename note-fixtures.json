@@ -1,0 +1,66 @@
+[
+  {
+    "id": "new-99202",
+    "patientType": "new",
+    "expectedCode": "99202",
+    "expectedLevels": { "problems": "straightforward", "data": "minimal", "risk": "minimal" },
+    "rationale": "One self-limited/minor problem, essentially no qualifying data, minimal management risk. Problems=Straightforward, Data=Minimal, Risk=Minimal → 2 of 3 at Straightforward.",
+    "noteText": "Chief Complaint: Small sore inside lower lip.\nHPI: New patient presents with a small painless sore of the lower lip noticed 3 days ago after accidentally biting the area. No bleeding, swelling, fever, dysphagia, or other symptoms.\nExam: 3 mm superficial healing ulcer of the lower labial mucosa. No surrounding erythema, drainage, induration, or mass.\nAssessment: Minor traumatic ulcer of lower lip.\nPlan: Reassurance provided. Recommend avoiding further trauma and observation. Expected to resolve spontaneously. Return if lesion persists or worsens."
+  },
+  {
+    "id": "new-99203",
+    "patientType": "new",
+    "expectedCode": "99203",
+    "expectedLevels": { "problems": "low", "data": "limited", "risk": "low" },
+    "rationale": "One stable chronic illness reaches Low in problems; reviewing one prior test result and ordering one new test gives 2 qualifying Category 1 data elements = Limited (Moderate needs 3); conservative OTC management is Low risk. Problems=Low, Data=Limited, Risk=Low → 2 of 3 at Low.",
+    "noteText": "Chief Complaint: Nasal congestion.\nHPI: New patient presents with intermittent nasal congestion and sneezing for approximately 6 months. Symptoms are stable. Denies fever, facial pain, purulent drainage, or epistaxis. Has occasionally used saline spray with improvement.\nData Reviewed/Ordered: Reviewed the patient's prior allergy test results from an outside allergist. A serum allergen panel was ordered today to further evaluate persistent allergic symptoms.\nExam: Mild bilateral nasal mucosal edema with clear secretions. No purulence, polyps, or significant obstruction.\nAssessment: Stable allergic rhinitis.\nPlan: Discussed allergen avoidance. Recommend daily saline irrigation and OTC oral antihistamine as needed. Serum allergen testing ordered. Follow up after results are available or sooner if symptoms worsen."
+  },
+  {
+    "id": "new-99204",
+    "patientType": "new",
+    "expectedCode": "99204",
+    "expectedLevels": { "problems": "moderate", "data": "limited", "risk": "moderate" },
+    "rationale": "Chronic condition with exacerbation gives Moderate problems; new prescription drug management gives Moderate risk. Problems=Moderate, Risk=Moderate → 2 of 3 at Moderate. Moderate data isn't required since two other elements already qualify.",
+    "noteText": "Chief Complaint: Worsening chronic sinus symptoms.\nHPI: New patient with chronic sinusitis presents with increased facial pressure, nasal obstruction, and thick drainage over the past 3 weeks. Symptoms have worsened despite saline irrigation and intranasal therapy. Denies visual changes or severe headache.\nExam: Nasal mucosal edema with thick mucopurulent drainage. Bilateral maxillary tenderness. No orbital swelling.\nAssessment: Chronic sinusitis with acute exacerbation.\nPlan: Discussed treatment options. Start amoxicillin-clavulanate 875/125 mg twice daily for 10 days. Continue saline irrigation and intranasal steroid. Risks and potential adverse effects of antibiotic therapy discussed. Follow up after treatment; CT sinus will be considered if symptoms persist."
+  },
+  {
+    "id": "new-99205",
+    "patientType": "new",
+    "expectedCode": "99205",
+    "expectedLevels": { "problems": "high", "data": "limited", "risk": "high" },
+    "rationale": "Acute illness posing a threat to bodily function (airway) gives High problems; decision to escalate to hospital-level care gives High risk. Problems=High, Risk=High → 2 of 3 at High. Extensive data isn't required since the other two elements independently qualify.",
+    "noteText": "Chief Complaint: Progressive neck swelling and difficulty breathing.\nHPI: New patient presents with rapidly worsening right neck swelling over the past 4 days, now associated with increasing dysphagia, muffled voice, and shortness of breath. Patient reports symptoms have significantly worsened since this morning.\nExam: Large tender right neck swelling with significant induration. Patient has muffled voice, difficulty handling secretions, and increased respiratory effort. Airway compromise is a concern.\nAssessment: Rapidly progressive neck infection/mass with concern for impending upper airway compromise.\nPlan: Given progression and potential threat to the airway, outpatient management is not appropriate. Discussed findings and risks with patient. Decision made for immediate transfer to the emergency department for hospital-level evaluation, airway monitoring, IV therapy, imaging, and surgical consultation. ED physician contacted regarding transfer."
+  },
+  {
+    "id": "established-99212",
+    "patientType": "established",
+    "expectedCode": "99212",
+    "expectedLevels": { "problems": "straightforward", "data": "minimal", "risk": "minimal" },
+    "rationale": "One self-limited/minor problem, essentially no qualifying data, minimal management risk. Problems=Straightforward, Data=Minimal, Risk=Minimal → 2 of 3 at Straightforward.",
+    "noteText": "Chief Complaint: Follow-up for minor mouth ulcer.\nHPI: Established patient returns for follow-up of a small traumatic ulcer of the lower lip noted one week ago. Patient reports significant improvement. No pain, bleeding, swelling, fever, or difficulty swallowing.\nExam: Small healing superficial ulcer of the lower labial mucosa. No erythema, drainage, induration, or mass.\nAssessment: Resolving traumatic ulcer of lower lip.\nPlan: Reassurance provided. No additional treatment necessary. Continue observation and avoid local trauma. Return as needed if lesion fails to resolve."
+  },
+  {
+    "id": "established-99213",
+    "patientType": "established",
+    "expectedCode": "99213",
+    "expectedLevels": { "problems": "low", "data": "minimal", "risk": "low" },
+    "rationale": "One stable chronic illness meets Low problems; conservative management is Low risk. Data is Minimal, not Limited \u2014 the note documents no test ordered, no result reviewed, no external record reviewed, and no discussion with another provider; reviewing allergen avoidance education with the patient is not one of CMS's qualifying Data actions. Problems=Low, Risk=Low \u2192 2 of 3 at Low. (Corrected from an earlier mislabel: the original fixture called Data 'Limited' without a documented basis for it.)",
+    "noteText": "Chief Complaint: Follow-up nasal congestion.\nHPI: Established patient with allergic rhinitis returns for routine follow-up. Nasal congestion and sneezing remain stable. Patient reports adequate symptom control with saline irrigation and OTC antihistamine. No facial pain, fever, purulent drainage, or epistaxis.\nExam: Mild bilateral nasal mucosal edema with clear secretions. No purulence, polyps, or significant obstruction.\nAssessment: Stable allergic rhinitis.\nPlan: Continue saline nasal irrigation and OTC antihistamine as needed. Allergen avoidance reviewed. Follow up in 6 months or sooner for worsening symptoms."
+  },
+  {
+    "id": "established-99214",
+    "patientType": "established",
+    "expectedCode": "99214",
+    "expectedLevels": { "problems": "moderate", "data": "moderate", "risk": "moderate" },
+    "rationale": "Chronic illness with exacerbation gives Moderate problems; reviewing an external note, reviewing a prior test result, AND ordering a new test gives 3 qualifying Category 1 data elements = Moderate; new prescription drug management gives Moderate risk. Problems=Moderate, Data=Moderate, Risk=Moderate → comfortably supports 99214.",
+    "noteText": "Chief Complaint: Worsening chronic sinus symptoms.\nHPI: Established patient with chronic sinusitis returns with worsening nasal obstruction, facial pressure, and thick drainage for 3 weeks despite saline irrigation and intranasal therapy. No visual changes, orbital swelling, or severe headache.\nData Reviewed/Ordered: Reviewed the prior ENT office note from an outside provider and reviewed the patient's previous CT sinus report. Due to persistent worsening symptoms, a new CT of the sinuses without contrast was ordered today to evaluate the extent of chronic sinonasal disease.\nExam: Bilateral nasal mucosal edema with mucopurulent drainage and maxillary tenderness. No orbital edema.\nAssessment: Chronic sinusitis with acute exacerbation.\nPlan: Start amoxicillin-clavulanate 875/125 mg twice daily for 10 days. Continue saline irrigation and intranasal steroid. Medication risks and potential adverse effects discussed. CT sinus without contrast ordered. Follow up after completion of treatment and imaging."
+  },
+  {
+    "id": "established-99215",
+    "patientType": "established",
+    "expectedCode": "99215",
+    "expectedLevels": { "problems": "high", "data": "limited", "risk": "high" },
+    "rationale": "Acute condition posing a threat to bodily function (airway) gives High problems; decision to escalate to hospital-level care gives High risk. Problems=High, Risk=High → 2 of 3 at High.",
+    "noteText": "Chief Complaint: Increasing neck swelling and difficulty breathing.\nHPI: Established patient with known deep neck infection returns urgently for rapidly increasing right neck swelling since yesterday. Reports worsening dysphagia, muffled voice, difficulty handling secretions, and increasing shortness of breath.\nExam: Significant right neck swelling and induration. Muffled voice present. Patient has difficulty handling secretions with increased respiratory effort. Findings concerning for progression with impending airway compromise.\nAssessment: Progressive deep neck infection with concern for upper airway compromise.\nPlan: Condition poses significant risk to airway function and is not appropriate for continued outpatient management. Decision made for immediate transfer to the emergency department for hospital-level care, airway monitoring, IV therapy, urgent imaging, and surgical evaluation. ED physician contacted and clinical findings discussed."
+  }
+]

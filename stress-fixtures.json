@@ -1,0 +1,66 @@
+[
+  {
+    "id": "stress-established-htn",
+    "patientType": "established",
+    "expectedCode": "99213",
+    "expectedLevels": { "problems": "low", "data": "minimal", "risk": "moderate" },
+    "rationale": "One chronic condition (HTN, dx x 5 yrs) managed = Low problems, even though the note never uses the words 'stable' or 'chronic' literally. No tests ordered/reviewed = Minimal data. Refilling/adjusting a prescription med = Moderate risk. Problems=Low, Risk=Moderate -> 2 of 3 don't actually agree at any single level except Low (Data doesn't reach Low either) -- worth checking by hand.",
+    "noteText": "Chief Complaint: f/u HTN.\nHPI: Pt here for routine f/u of HTN, dx x 5 yrs. BP running a little high at home, pt says. No CP, SOB, or HA. Will refill her lisinopril 20mg, bump up if needed at next visit.\nExam: BP 148/92, otherwise WNL.\nAssessment: HTN, suboptimal control.\nPlan: Refill lisinopril 20mg daily. Recheck BP in 4 wks."
+  },
+  {
+    "id": "stress-new-knee-flare",
+    "patientType": "new",
+    "expectedCode": "99204",
+    "expectedLevels": { "problems": "moderate", "data": "limited", "risk": "moderate" },
+    "rationale": "Chronic condition (knee OA) with a flare/exacerbation = Moderate problems, described with 'acting up' and 'flare' instead of the words 'worsening' or 'exacerbation'. One test ordered (plain films) = Limited data. New prescription (meloxicam) = Moderate risk.",
+    "noteText": "Chief Complaint: Right knee pain.\nHPI: New patient with longstanding right knee OA, doing okay til recently \u2014 pain's really been acting up over the last 2 weeks, now limiting ambulation. Denies trauma, fever, locking.\nExam: Right knee with crepitus, mild effusion, decreased ROM 2/2 pain. No warmth or erythema.\nAssessment: Right knee OA, flare.\nPlan: Start meloxicam 15mg daily. Order plain films of the right knee to rule out significant joint space narrowing. Discussed activity modification and weight-bearing precautions."
+  },
+  {
+    "id": "stress-established-ekg",
+    "patientType": "established",
+    "expectedCode": "99214",
+    "expectedLevels": { "problems": "moderate", "data": "moderate", "risk": "minimal" },
+    "rationale": "An incidental abnormal finding with uncertain cause = Moderate problems (CMS's own 'undiagnosed new problem with uncertain prognosis' example, described here without using that phrase). A same-day phone discussion with an external cardiologist about the finding satisfies CMS Data Category 3 (discussion with external physician) on its own = Moderate data, phrased informally as 'spoke with Dr. Patel...re:' rather than 'discussed with' or 'consultation'. No medication started, purely diagnostic workup = Minimal risk.",
+    "noteText": "Chief Complaint: Follow-up abnormal EKG finding.\nHPI: Established patient returns after an abnormal EKG picked up on routine screening last week. Spoke with Dr. Patel in cardiology by phone this morning re: the tracing \u2014 he thinks it's likely a benign variant but wants an outpatient echo to be safe. Patient asymptomatic, denies chest pain, palpitations, syncope.\nExam: Regular rate and rhythm, no murmurs, gallops, or rubs.\nAssessment: Incidental EKG abnormality, favor benign variant, pending further workup.\nPlan: Order outpatient echocardiogram. Reassured patient. Will follow up after echo results."
+  },
+  {
+    "id": "stress-new-pharyngitis",
+    "patientType": "new",
+    "expectedCode": "99203",
+    "expectedLevels": { "problems": "low", "data": "minimal", "risk": "low" },
+    "rationale": "A diagnosed acute uncomplicated illness (viral pharyngitis) with an actual assessment and specific plan matches CMS's own Low-level example ('1 acute, uncomplicated illness/injury'), not Straightforward \u2014 Straightforward is reserved for even more trivial complaints with essentially no clinical decision-making. No tests = Minimal data. OTC analgesics only = Low risk. Written with informal abbreviations (pt, hx) to test whether abbreviation style itself breaks extraction, separate from vocabulary choice. (Corrected from an earlier mislabel: 'Straightforward' undersold a named, assessed diagnosis.)",
+    "noteText": "Chief Complaint: Sore throat.\nHPI: New pt, 3 days sore throat, no fever, no drooling, no voice change. Hx notable only for seasonal allergies, well controlled on OTC loratadine.\nExam: Pharynx mildly erythematous, no exudate, no LAD, tonsils normal.\nAssessment: Acute pharyngitis, likely viral.\nPlan: Supportive care \u2014 fluids, OTC analgesics as needed. Return if worsening, fever, or difficulty swallowing >5-7 days."
+  },
+  {
+    "id": "stress-established-two-chronic",
+    "patientType": "established",
+    "expectedCode": "99214",
+    "expectedLevels": { "problems": "moderate", "data": "limited", "risk": "moderate" },
+    "rationale": "CMS's own rule: 2 OR MORE stable chronic illnesses = Moderate problems, even though each condition individually sounds simple. This tests whether extraction can count multiple conditions, not just detect the word 'stable' once. Ordering labs = Limited data. Two chronic medication refills = Moderate risk.",
+    "noteText": "Chief Complaint: Diabetes and hypertension follow-up.\nHPI: Established patient with T2DM and HTN, both on stable regimens, here for routine recheck. Denies polyuria, polydipsia, chest pain, shortness of breath. Checking labs today.\nExam: Unremarkable.\nAssessment: T2DM, controlled. HTN, controlled.\nPlan: Continue metformin 1000mg twice daily and lisinopril 10mg daily. Recheck labs in 3 months."
+  },
+  {
+    "id": "stress-new-chestpain-abbrev",
+    "patientType": "new",
+    "expectedCode": "99205",
+    "expectedLevels": { "problems": "high", "data": "minimal", "risk": "high" },
+    "rationale": "Acute chest pain with concern for a cardiac event is a threat to bodily function = High problems, and an emergent transfer for possible ACS = High risk, but both are written entirely in urgent-care shorthand (r/o ACS, sent to ED, EMS) rather than CMS's own wording ('threat to,' 'emergency department'). This tests whether extraction recognizes clinical ACRONYMS for high-acuity concepts, not just full phrases. Data is genuinely thin here (no explicit test ordered/reviewed documented before transfer) \u2014 a realistic example of how even a high-acuity visit can be under-documented for MDM purposes.",
+    "noteText": "Chief Complaint: SOB, cp.\nHPI: Pt c/o acute onset SOB and cp x 2 hrs, worse w/ exertion, assoc. diaphoresis. + FHx early MI. VS notable for tachycardia. Sent to ED for further w/u, r/o ACS.\nExam: Diaphoretic, tachycardic, lungs clear.\nAssessment: Acute chest pain, r/o ACS.\nPlan: Called ED, pt transported via EMS for emergent eval given concern for cardiac event."
+  },
+  {
+    "id": "stress-new-viral-syndrome",
+    "patientType": "new",
+    "expectedCode": "99203",
+    "expectedLevels": { "problems": "moderate", "data": "minimal", "risk": "low" },
+    "rationale": "'Acute illness with systemic symptoms' is one of CMS's own official Moderate-problems examples \u2014 this note uses that almost-exact phrase ('systemic symptoms') in the Assessment, testing whether the keyword list covers CMS's own official language, not just informal synonyms. Despite Problems reaching Moderate, Data stays Minimal and Risk stays Low (OTC-only supportive care), so per the 2-of-3 rule the visit still correctly lands at Low overall \u2014 a good example that one Moderate element alone doesn't guarantee a Moderate code.",
+    "noteText": "Chief Complaint: Fever and fussiness.\nHPI: New patient brought in by spouse, running a fever since last night, not himself, achy all over, poor appetite. No cough, no rash, no neck stiffness.\nExam: Temp 101.8, mild pharyngeal erythema, no distress.\nAssessment: Acute viral syndrome with systemic symptoms.\nPlan: Supportive care, fluids, antipyretics as needed. Return if worsening or persistent >5 days."
+  },
+  {
+    "id": "stress-established-warfarin",
+    "patientType": "established",
+    "expectedCode": "99213",
+    "expectedLevels": { "problems": "low", "data": "limited", "risk": "high" },
+    "rationale": "Warfarin is CMS's own textbook example of 'drug therapy requiring intensive monitoring for toxicity' = High risk specifically (a step above ordinary prescription management, which is only Moderate) \u2014 but the note never uses a dosage number or the word 'prescribe,' so nothing currently in the risk scanner recognizes a high-risk drug CLASS by name. This also tests a subtle real rule: even with Risk=High, the visit still lands at Low overall, because Problems and Data are both only Low/Limited \u2014 you need 2 of 3 elements at a level, not just one, even a High one.",
+    "noteText": "Chief Complaint: INR follow-up.\nHPI: Established patient on long-term warfarin for history of PE, here for routine INR check. Feeling well, no bleeding, no bruising, compliant with dosing.\nExam: Unremarkable, no signs of bleeding.\nAssessment: Therapeutic anticoagulation, warfarin management.\nPlan: Continue warfarin per current dosing, recheck INR in 4 weeks, patient counseled on bleeding precautions."
+  }
+]

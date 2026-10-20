@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>EM Code Selector</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --paper: #FAFAF8; --card: #FFFFFF; --ink: #14202B; --ink-soft: #3C4A54; --line: #DDE2E6;
+    --blue: #1E5C8C; --blue-soft: #E7EFF5;
+    --teal: #2E7D6B; --teal-soft: #E6F1EE;
+    --amber: #B8842B; --amber-soft: #FBF0DD;
+    --clay: #A8432E; --clay-soft: #F7E8E4;
+    --green: #00D756; --green-soft: #E1FBEC; --green-dark: #00A544;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif; padding: 28px 20px;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  body { padding: 0 0 28px; }
+  .hero {
+    background: var(--green);
+    padding: 32px 20px 30px; margin-bottom: 24px;
+  }
+  .hero .wrap { padding: 0; }
+  h1 { font-size: 28px; margin: 0 0 6px; color: var(--ink); font-weight: 700; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--ink); margin-bottom: 8px; font-weight: 700;
+  }
+  p.sub { color: var(--ink-soft); font-size: 14.5px; max-width: 640px; line-height: 1.55; margin-top: 4px; font-weight: 500; }
+  .page-body { padding: 0 20px; }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
+  @media (min-width: 920px) { .grid { grid-template-columns: 400px 1fr; } }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; margin-bottom: 16px;
+  }
+
+  textarea {
+    width: 100%; min-height: 260px; font-family: 'IBM Plex Mono', monospace; font-size: 13.5px;
+    line-height: 1.6; padding: 10px; border-radius: 7px; border: 1px solid var(--line);
+    resize: vertical; background: var(--paper); color: var(--ink);
+  }
+
+  .char-counter { font-size: 11.5px; color: var(--ink-soft); text-align: right; margin-top: 4px; }
+  .char-counter.over-limit { color: var(--clay); font-weight: 600; }
+
+  label.field-label { font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 8px; }
+
+  .toggle-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .toggle-row button, .time-row input {
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; font-weight: 600;
+  }
+  .toggle-row button {
+    flex: 1; padding: 8px 10px; border-radius: 7px; border: 1px solid var(--line);
+    background: transparent; color: var(--ink-soft); cursor: pointer; text-transform: capitalize;
+  }
+  .toggle-row button.active { border-color: var(--green); background: var(--green-soft); color: var(--green-dark); }
+
+  .time-row {
+    margin-bottom: 14px; padding: 10px 12px; border-radius: 7px;
+    border: 1px dashed var(--line); background: var(--paper);
+  }
+  .time-row input {
+    width: 100%; padding: 8px 10px; border-radius: 7px; border: 1px solid var(--line);
+    background: var(--paper); color: var(--ink);
+  }
+
+  .btn-row { display: flex; gap: 8px; }
+  #analyzeBtn {
+    flex: 1; padding: 11px 12px; border-radius: 7px; border: none;
+    background: var(--green); color: var(--ink); font-weight: 700; font-size: 14.5px; cursor: pointer;
+    transition: background 0.15s;
+  }
+  #analyzeBtn:hover:not(:disabled) { background: var(--green-dark); }
+  #analyzeBtn:disabled { background: var(--line); color: var(--ink-soft); cursor: default; }
+
+  #clearBtn {
+    padding: 11px 16px; border-radius: 7px; border: 1px solid var(--line);
+    background: transparent; color: var(--ink-soft); font-weight: 600; font-size: 14.5px; cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  #clearBtn:hover { background: var(--clay-soft); color: var(--clay); border-color: var(--clay); }
+
+  .note { font-size: 12.5px; color: var(--ink-soft); font-weight: 500; line-height: 1.5; margin-top: 12px; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 4px; font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.02em; text-transform: uppercase; padding: 2px 8px;
+    border-radius: 999px; font-weight: 600; white-space: nowrap;
+  }
+  .pill-high { color: var(--teal); background: var(--teal-soft); }
+  .pill-low { color: var(--clay); background: var(--clay-soft); }
+  .pill-llm { color: var(--green-dark); background: var(--green-soft); }
+  .pill-regex-fallback { color: var(--amber); background: var(--amber-soft); }
+
+  .evidence {
+    font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; color: var(--ink-soft); font-weight: 500;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+    padding: 8px 10px; margin-top: 8px; line-height: 1.5;
+  }
+
+  .element-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+  .element-head .name { font-weight: 600; font-size: 16px; }
+
+  select {
+    width: 100%; margin-top: 8px; padding: 8px; border-radius: 7px; border: 1px solid var(--line);
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; background: var(--paper); color: var(--ink);
+  }
+
+  .banner {
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;
+  }
+  .banner-amber { background: var(--amber-soft); border: 1px solid var(--amber); color: var(--ink); }
+  .banner-amber strong { color: var(--amber); }
+
+  .code-panel {
+    border-radius: 10px; padding: 22px 24px; display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 14px;
+  }
+  .code-panel .big { font-weight: 700; font-size: 44px; line-height: 1.1; }
+  .code-panel .meta { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .code-panel .reasoning { flex: 1 1 260px; max-width: 480px; font-size: 13px; color: var(--ink-soft); line-height: 1.6; text-align: left; }
+  .code-panel .reasoning .disclaimer { display: block; margin-top: 10px; }
+
+  #resultsArea { display: none; }
+  #errorArea { color: var(--clay); font-size: 13.5px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">CMS · AMA 2021 office visit MDM criteria</div>
+    <h1>EM Code Selector</h1>
+    <p class="sub">Pastes an office visit note, extracts MDM elements via Claude (regex fallback if the API call fails), and recommends a code — every element stays editable so a coder can confirm or override before signing off.</p>
+  </div>
+</div>
+
+<div class="wrap page-body">
+  <div class="grid">
+    <!-- left: input -->
+    <div>
+      <div class="card">
+        <label class="field-label" id="patientTypeLabel">Patient type</label>
+        <div class="toggle-row" id="patientTypeToggle" role="group" aria-labelledby="patientTypeLabel">
+          <button data-value="new" class="active" aria-pressed="true">New</button>
+          <button data-value="established" aria-pressed="false">Established</button>
+        </div>
+
+        <label class="field-label" for="sampleSelect">Load a sample note (optional)</label>
+        <select id="sampleSelect" style="margin-bottom: 14px;">
+          <option value="">— none —</option>
+        </select>
+
+        <label class="field-label" for="noteText">Office visit note</label>
+        <textarea id="noteText" placeholder="Paste the HPI, assessment & plan, and any relevant orders or discussion..."></textarea>
+        <div id="charCounter" class="char-counter">0 / 8,000 characters</div>
+
+        <label class="field-label" for="totalTime" style="margin-top:14px;">Total visit time (minutes) — optional</label>
+        <div class="time-row">
+          <input id="totalTime" type="number" min="0" placeholder="Leave blank to score by MDM only" />
+        </div>
+
+        <div class="btn-row">
+          <button id="analyzeBtn">Analyze note</button>
+          <button id="clearBtn" type="button">Clear</button>
+        </div>
+        <div id="errorArea" role="alert" aria-live="assertive"></div>
+
+        <div class="note">
+          The note is sent to Claude only to extract MDM elements. If time is entered and its code band is higher
+          than the MDM-based code, the higher one wins (per CMS rules) — the result panel shows which method decided.
+        </div>
+      </div>
+    </div>
+
+    <!-- right: results -->
+    <div id="resultsArea" aria-live="polite">
+      <div id="methodBanner"></div>
+      <div id="reviewBanner"></div>
+
+      <div class="card" id="problemsCard"></div>
+      <div class="card" id="dataCard"></div>
+      <div class="card" id="riskCard"></div>
+
+      <div class="code-panel" id="codePanel"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const LEVEL_LABEL = { straightforward: 'Straightforward', low: 'Low', moderate: 'Moderate', high: 'High' };
+const RISK_LEVEL_LABEL = { minimal: 'Minimal', low: 'Low', moderate: 'Moderate', high: 'High' };
+const LEVEL_COLOR = { straightforward: 'teal', low: 'blue', moderate: 'amber', high: 'clay' };
+const PROBLEM_LEVELS = ['straightforward', 'low', 'moderate', 'high'];
+const DATA_LEVELS = ['minimal', 'limited', 'moderate', 'extensive'];
+const RISK_LEVELS = ['minimal', 'low', 'moderate', 'high'];
+const DATA_LEVEL_LABEL = { minimal: 'Minimal', limited: 'Limited', moderate: 'Moderate', extensive: 'Extensive' };
+
+let grid = null;
+let patientType = 'new';
+let lastExtraction = null; // keeps original AI/regex confidence + reasons visible after overrides
+
+const el = (id) => document.getElementById(id);
+
+const MAX_NOTE_CHARS = 8000;
+
+el('noteText').addEventListener('input', updateCharCounter);
+function updateCharCounter() {
+  const len = el('noteText').value.length;
+  const counter = el('charCounter');
+  counter.textContent = `${len.toLocaleString()} / ${MAX_NOTE_CHARS.toLocaleString()} characters`;
+  const over = len > MAX_NOTE_CHARS;
+  counter.classList.toggle('over-limit', over);
+  el('analyzeBtn').disabled = over || !el('noteText').value.trim();
+  if (over) counter.textContent += ' — trim before analyzing';
+}
+
+fetch('/grid').then(r => r.json()).then(g => { grid = g; }).catch(() => { grid = null; });
+
+fetch('/samples').then(r => r.json()).then(samples => {
+  const select = el('sampleSelect');
+  const label = document.querySelector('label[for="sampleSelect"]');
+  if (!samples.length) {
+    select.style.display = 'none';
+    if (label) label.style.display = 'none';
+    return;
+  }
+  samples.forEach((s, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${s.patientType === 'new' ? 'New' : 'Established'} patient — ${s.expectedCode}`;
+    select.appendChild(opt);
+  });
+  select.addEventListener('change', () => {
+    if (select.value === '') return;
+    const sample = samples[Number(select.value)];
+    el('noteText').value = sample.noteText;
+    patientType = sample.patientType;
+    [...el('patientTypeToggle').children].forEach(b => {
+      const active = b.dataset.value === sample.patientType;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
+    updateCharCounter();
+    el('resultsArea').style.display = 'none';
+    lastExtraction = null;
+  });
+}).catch(() => { /* sample loader is optional; fail silently */ });
+
+el('patientTypeToggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  patientType = btn.dataset.value;
+  [...el('patientTypeToggle').children].forEach(b => {
+    b.classList.toggle('active', b === btn);
+    b.setAttribute('aria-pressed', String(b === btn));
+  });
+  if (lastExtraction) rescore();
+});
+
+el('analyzeBtn').addEventListener('click', analyze);
+
+el('clearBtn').addEventListener('click', () => {
+  el('noteText').value = '';
+  el('totalTime').value = '';
+  el('errorArea').textContent = '';
+  el('resultsArea').style.display = 'none';
+  lastExtraction = null;
+  updateCharCounter();
+});
+
+async function analyze() {
+  const noteText = el('noteText').value.trim();
+  el('errorArea').textContent = '';
+  if (!noteText) return;
+
+  el('analyzeBtn').disabled = true;
+  el('analyzeBtn').textContent = 'Analyzing note…';
+
+  try {
+    const totalTimeMinutes = el('totalTime').value ? Number(el('totalTime').value) : null;
+    const res = await fetch('/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ noteText, patientType, totalTimeMinutes }),
+    });
+    const body = await res.json();
+    if (!res.ok) throw new Error(body.error || 'Request failed');
+
+    lastExtraction = body.extraction;
+    render(body);
+  } catch (err) {
+    el('errorArea').textContent = err.message;
+  } finally {
+    el('analyzeBtn').textContent = 'Analyze note';
+    updateCharCounter(); // restores correct disabled state instead of blindly re-enabling
+  }
+}
+
+function render(body) {
+  el('resultsArea').style.display = 'block';
+
+  // method banner
+  const methodPillClass = body.extractionMethod === 'llm' ? 'pill-llm' : 'pill-regex-fallback';
+  const methodLabel = body.extractionMethod === 'llm' ? 'LLM extraction' : 'Regex fallback (LLM call failed)';
+  let methodHtml = `<span class="pill ${methodPillClass}">${methodLabel}</span>`;
+  if (body.extractionMethod === 'regex-fallback') {
+    methodHtml = `<div class="banner banner-amber"><strong>LLM extraction failed — used regex fallback.</strong><br>
+      ${escapeHtml(body.fallbackReason || '')}<br>Review every element below manually; the regex extractor is
+      the less accurate of the two approaches.</div>`;
+  }
+  el('methodBanner').innerHTML = body.extractionMethod === 'llm'
+    ? `<div style="margin-bottom:14px;">${methodHtml}</div>`
+    : methodHtml;
+
+  // review banner
+  const flagged = [];
+  if (body.extraction.confidence.problems === 'low') flagged.push('Problems');
+  if (body.extraction.confidence.data === 'low') flagged.push('Data');
+  if (body.extraction.confidence.risk === 'low') flagged.push('Risk');
+  el('reviewBanner').innerHTML = flagged.length
+    ? `<div class="banner banner-amber"><strong>Manual review recommended:</strong> ${flagged.join(', ')} — the extractor
+        wasn't confident it found clear supporting language for this element. See the hint below each field.</div>`
+    : '';
+
+  el('problemsCard').innerHTML = renderElement(
+    'Problems addressed', 'Element 1 of 3', PROBLEM_LEVELS, LEVEL_LABEL,
+    body.extraction.problemsLevel, body.extraction.confidence.problems, body.extraction.reasons.problems, 'problemsLevel'
+  );
+  el('dataCard').innerHTML = renderElement(
+    'Data reviewed and analyzed', 'Element 2 of 3', DATA_LEVELS, DATA_LEVEL_LABEL,
+    body.extraction.dataLevel, body.extraction.confidence.data, body.extraction.reasons.data, 'dataLevel'
+  );
+  el('riskCard').innerHTML = renderElement(
+    'Risk of complications', 'Element 3 of 3', RISK_LEVELS, RISK_LEVEL_LABEL,
+    body.extraction.riskLevel, body.extraction.confidence.risk, body.extraction.reasons.risk, 'riskLevel'
+  );
+
+  ['problemsLevel', 'dataLevel', 'riskLevel'].forEach((field) => {
+    el(field).addEventListener('change', rescore);
+  });
+
+  renderScore(body.score);
+}
+
+function renderElement(title, eyebrow, levels, labelMap, currentLevel, confidence, reason, fieldId) {
+  const confClass = confidence === 'high' ? 'pill-high' : 'pill-low';
+  const options = levels.map(l => `<option value="${l}" ${l === currentLevel ? 'selected' : ''}>${labelMap[l]}</option>`).join('');
+  return `
+    <div class="element-head">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);">${eyebrow}</div>
+        <div class="name">${title}</div>
+      </div>
+      <span class="pill ${confClass}">${confidence} confidence</span>
+    </div>
+    <div class="evidence">${escapeHtml(reason)}</div>
+    <select id="${fieldId}">${options}</select>
+  `;
+}
+
+async function rescore() {
+  const problemsLevel = el('problemsLevel').value;
+  const dataLevel = el('dataLevel').value;
+  const riskLevel = el('riskLevel').value;
+  const totalTimeMinutes = el('totalTime').value ? Number(el('totalTime').value) : null;
+
+  try {
+    const res = await fetch('/score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patientType, problemsLevel, dataLevel, riskLevel, totalTimeMinutes }),
+    });
+    const body = await res.json();
+    if (!res.ok) throw new Error(body.error || 'Scoring failed');
+    renderScore(body.score);
+  } catch (err) {
+    el('errorArea').textContent = err.message;
+  }
+}
+
+function renderScore(score) {
+  const color = LEVEL_COLOR[score.mdmLevel] || 'blue';
+  el('codePanel').style.background = `var(--${color}-soft)`;
+  el('codePanel').style.border = `1px solid var(--${color})`;
+  el('codePanel').innerHTML = `
+    <div>
+      <div class="meta" style="color:var(--${color});">${patientType} patient · via ${score.method}</div>
+      <div class="big">${score.recommendedCode}</div>
+    </div>
+    <div class="reasoning">
+      <div>${escapeHtml(score.reasoning)}</div>
+      <div class="disclaimer">Decision support only — confirm against full documentation before billing.</div>
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>

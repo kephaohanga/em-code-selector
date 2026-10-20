@@ -1,0 +1,91 @@
+{
+  "_notes": "CMS/AMA 2021+ Office/Outpatient E/M (99202-99215) selection criteria. Educational reference structure only — verify against current CMS/AMA source documents before production/compliance use.",
+
+  "levelOrder": ["straightforward", "low", "moderate", "high"],
+
+  "problems": {
+    "straightforward": {
+      "label": "1 self-limited or minor problem",
+      "examples": ["single self-limited problem", "minor injury with expected quick resolution"]
+    },
+    "low": {
+      "label": "2+ self-limited/minor problems, OR 1 stable chronic illness, OR 1 acute uncomplicated illness/injury",
+      "examples": ["two minor complaints same visit", "one stable chronic condition, no changes", "uncomplicated acute illness (e.g. simple UTI)"]
+    },
+    "moderate": {
+      "label": "1+ chronic illness with exacerbation/progression/treatment side effects, OR 2+ stable chronic illnesses, OR 1 undiagnosed new problem with uncertain prognosis, OR 1 acute illness with systemic symptoms, OR 1 acute complicated injury",
+      "examples": ["diabetes with worsening control", "two or more stable chronic conditions managed together", "new symptom needing workup, cause unclear", "acute illness with systemic signs (fever, malaise)"]
+    },
+    "high": {
+      "label": "1+ chronic illness with severe exacerbation/progression/side effects, OR acute/chronic illness or injury posing a threat to life or bodily function",
+      "examples": ["severe exacerbation of chronic disease", "condition threatening limb, organ, or life"]
+    }
+  },
+
+  "data": {
+    "minimal": {
+      "label": "None or minimal data reviewed",
+      "examples": ["no tests ordered or reviewed"]
+    },
+    "limited": {
+      "label": "Meets at least 1 of 2 categories",
+      "categories": {
+        "category1_testsAndDocuments": "Review of prior external note(s) from each unique source, and/or review of each unique test result, and/or ordering of each unique test (any combination counts toward a total of 2)",
+        "category2_independentHistorian": "Assessment requiring an independent historian (e.g. family member, caregiver) because patient can't provide reliable history"
+      }
+    },
+    "moderate": {
+      "label": "Meets at least 1 of 3 categories",
+      "categories": {
+        "category1_testsDocsHistorian": "Any combination of 3 from: unique test ordered, unique test reviewed, unique prior note reviewed, independent historian",
+        "category2_independentInterpretation": "Independent interpretation of a test performed by another physician/QHP (not separately billed)",
+        "category3_discussion": "Discussion of management or test interpretation with an external physician/QHP/appropriate source"
+      }
+    },
+    "extensive": {
+      "label": "Meets at least 2 of 3 categories",
+      "categories": {
+        "category1_testsDocsHistorian": "Any combination of 3 from: unique test ordered, unique test reviewed, unique prior note reviewed, independent historian",
+        "category2_independentInterpretation": "Independent interpretation of a test performed by another physician/QHP (not separately billed)",
+        "category3_discussion": "Discussion of management or test interpretation with an external physician/QHP/appropriate source"
+      }
+    }
+  },
+
+  "risk": {
+    "minimal": {
+      "label": "Minimal risk of morbidity",
+      "examples": ["no treatment", "rest, reassurance"]
+    },
+    "low": {
+      "label": "Low risk of morbidity",
+      "examples": ["over-the-counter medication management", "minor procedure with no identified risk factors"]
+    },
+    "moderate": {
+      "label": "Moderate risk of morbidity",
+      "examples": ["prescription drug management", "minor surgery with identified patient/procedure risk factors", "social determinants of health significantly limiting diagnosis or treatment"]
+    },
+    "high": {
+      "label": "High risk of morbidity",
+      "examples": ["drug therapy requiring intensive monitoring for toxicity", "decision regarding elective major surgery with risk factors", "decision regarding emergency major surgery", "decision regarding hospitalization", "decision not to resuscitate or to de-escalate care given poor prognosis"]
+    }
+  },
+
+  "codeMapping": {
+    "straightforward": { "new": "99202", "established": "99212" },
+    "low":             { "new": "99203", "established": "99213" },
+    "moderate":         { "new": "99204", "established": "99214" },
+    "high":             { "new": "99205", "established": "99215" }
+  },
+
+  "timeThresholdsMinutes": {
+    "99202": { "min": 15, "max": 29 },
+    "99203": { "min": 30, "max": 44 },
+    "99204": { "min": 45, "max": 59 },
+    "99205": { "min": 60, "max": 74 },
+    "99212": { "min": 10, "max": 19 },
+    "99213": { "min": 20, "max": 29 },
+    "99214": { "min": 30, "max": 39 },
+    "99215": { "min": 40, "max": 54 }
+  }
+}
